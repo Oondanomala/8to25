@@ -1,0 +1,16 @@
+[
+  {
+    "modid": "${modID}",
+    "name": "${modName}",
+    "description": "Allows running the 1.8 client on Java 25.",
+    "version": "${version}",
+    "mcversion": "1.8.9",
+    "url": "",
+    "updateUrl": "",
+    "authorList": ["Oondanomala"],
+    "credits": "Thanks to eigenraven for creating lwjgl3ify!",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]

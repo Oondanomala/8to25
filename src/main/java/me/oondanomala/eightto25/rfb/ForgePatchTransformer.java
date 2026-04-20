@@ -84,8 +84,7 @@ public class ForgePatchTransformer implements RfbClassTransformer {
 
         for (MethodNode method : node.methods) {
             if (method.name.equals("setup") && method.instructions != null) {
-                for (ListIterator<AbstractInsnNode> it = method.instructions.iterator(); it.hasNext(); ) {
-                    AbstractInsnNode insn = it.next();
+                for (AbstractInsnNode insn : method.instructions) {
                     if (insn.getOpcode() == INVOKEVIRTUAL) {
                         MethodInsnNode methodInsn = (MethodInsnNode) insn;
                         if (methodInsn.owner.equals("java/util/jar/JarInputStream") && methodInsn.name.equals("getNextJarEntry")) {
@@ -189,8 +188,7 @@ public class ForgePatchTransformer implements RfbClassTransformer {
         for (MethodNode method : node.methods) {
             if (method.instructions == null) continue;
 
-            for (ListIterator<AbstractInsnNode> it = method.instructions.iterator(); it.hasNext(); ) {
-                AbstractInsnNode insn = it.next();
+            for (AbstractInsnNode insn : method.instructions) {
                 if (insn.getOpcode() == INVOKESTATIC) {
                     MethodInsnNode methodInsn = ((MethodInsnNode) insn);
                     if (methodInsn.name.equals("makeWritable")) {

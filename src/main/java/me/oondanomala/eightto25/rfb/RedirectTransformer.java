@@ -3,6 +3,7 @@ package me.oondanomala.eightto25.rfb;
 import com.gtnewhorizons.retrofuturabootstrap.api.ClassHeaderMetadata;
 import com.gtnewhorizons.retrofuturabootstrap.api.ClassNodeHandle;
 import com.gtnewhorizons.retrofuturabootstrap.api.ExtensibleClassLoader;
+import com.gtnewhorizons.retrofuturabootstrap.api.RetroFuturaBootstrap;
 import com.gtnewhorizons.retrofuturabootstrap.api.RfbClassTransformer;
 import org.objectweb.asm.commons.ClassRemapper;
 import org.objectweb.asm.commons.Remapper;
@@ -23,6 +24,10 @@ public class RedirectTransformer extends Remapper implements RfbClassTransformer
         .map(s -> s.replace('/', '.')).toArray(String[]::new);
     private static final byte[][] PREFIX_BYTES = Arrays.stream(fromPrefixes)
         .map(s -> s.getBytes(StandardCharsets.UTF_8)).toArray(byte[][]::new);
+
+    public RedirectTransformer() {
+        super(RetroFuturaBootstrap.API.newestAsmVersion());
+    }
 
     @Override
     public String id() {

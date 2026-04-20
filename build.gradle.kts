@@ -48,13 +48,21 @@ val shade: Configuration by configurations.creating {
     configurations.implementation.get().extendsFrom(this)
 }
 
+configurations.configureEach {
+    resolutionStrategy.dependencySubstitution {
+        substitute(module("net.minecraft:launchwrapper"))
+            .using(module("com.gtnewhorizons.retrofuturabootstrap:RetroFuturaBootstrap:1.0.16"))
+            .because("LaunchWrapper replacement")
+    }
+    exclude("org.ow2.asm", "asm-debug-all")
+}
+
 dependencies {
     minecraft("com.mojang:minecraft:1.8.9")
     mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")
     forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
 
     // Cannot be shaded as mod classes aren't loaded on launch
-    implementation("com.gtnewhorizons.retrofuturabootstrap:RetroFuturaBootstrap:1.0.16")
     val asmVersion = "9.9.1"
     implementation("org.ow2.asm:asm:$asmVersion")
     implementation("org.ow2.asm:asm-commons:$asmVersion")

@@ -66,4 +66,4 @@ It's actually surprisingly simple!
 - Apache Commons Lang is updated to fix a compatibility issue with modern Java,
   and Apache Commons Compress and its dependencies are updated for the following bullet point.
 - Usage of the now removed `Pack200` class is redirected to the Apache Commons Compress implementation
-  (with a compatibility to work around Forge bugs).
+  (with a compatibility shim to work around Forge bugs).

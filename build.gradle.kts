@@ -97,7 +97,7 @@ tasks {
         inputs.property("modName", modName)
         inputs.property("version", version)
 
-        filesMatching(listOf("mcmod.info")) {
+        filesMatching(listOf("mcmod.info", "META-INF/rfb-plugin/*")) {
             expand(inputs.properties) {
                 escapeBackslash = true
             }

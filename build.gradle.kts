@@ -20,7 +20,9 @@ java {
 loom {
     runConfigs {
         getByName("client") {
+            property("file.encoding", "UTF-8")
             property("java.system.class.loader", "com.gtnewhorizons.retrofuturabootstrap.RfbSystemClassLoader")
+            vmArgs("--enable-native-access", "ALL-UNNAMED")
             mainClass.set("com.gtnewhorizons.retrofuturabootstrap.Main")
         }
         remove(getByName("server"))
@@ -51,9 +53,10 @@ val shade: Configuration by configurations.creating {
 configurations.configureEach {
     resolutionStrategy.dependencySubstitution {
         substitute(module("net.minecraft:launchwrapper"))
-            .using(module("com.gtnewhorizons.retrofuturabootstrap:RetroFuturaBootstrap:1.0.16"))
+            .using(module(libs.rfb.get().toString()))
             .because("LaunchWrapper replacement")
     }
+    // Exclude ASM 5 and LWJGL2
     exclude("org.ow2.asm", "asm-debug-all")
 }
 
@@ -63,15 +66,14 @@ dependencies {
     forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
 
     // Cannot be shaded as mod classes aren't loaded on launch
-    val asmVersion = "9.9.1"
-    implementation("org.ow2.asm:asm:$asmVersion")
-    implementation("org.ow2.asm:asm-commons:$asmVersion")
-    implementation("org.ow2.asm:asm-tree:$asmVersion")
-    implementation("org.ow2.asm:asm-analysis:$asmVersion")
-    implementation("org.ow2.asm:asm-util:$asmVersion")
+    implementation(libs.asm)
+    implementation(libs.asmCommons)
+    implementation(libs.asmTree)
+    implementation(libs.asmAnalysis)
+    implementation(libs.asmUtil)
 
     // Mod dependencies
-    shade("net.lenni0451:Reflect:1.6.3")
+    shade(libs.reflect)
 
     // Updated game dependencies
     // Required for:

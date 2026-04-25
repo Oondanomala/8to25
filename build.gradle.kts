@@ -56,7 +56,7 @@ configurations.configureEach {
             .using(module(libs.rfb.get().toString()))
             .because("LaunchWrapper replacement")
     }
-    // Exclude ASM 5 and LWJGL2
+    // Exclude ASM 5
     exclude("org.ow2.asm", "asm-debug-all")
 }
 

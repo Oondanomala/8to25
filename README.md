@@ -30,6 +30,10 @@ and choose a modern JDK to run the game (Java 25 is recommended).
 You might also want to consider adding `-XX:+UseCompactObjectHeaders` to the JVM arguments
 if using Java 25+, for lower memory usage.
 
+> [!IMPORTANT]
+> If you are using Linux you'll need to set `useNativeTransport` to false
+> in `options.txt` to be able to join servers!
+
 ---
 
 If you are not using a MultiMC based launcher, please switch to a MultiMC based launcher.

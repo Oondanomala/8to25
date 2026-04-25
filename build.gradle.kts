@@ -65,24 +65,22 @@ dependencies {
     mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")
     forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
 
+    // Updated game dependencies
+    // Required for:
+    // - Making ASM and the SystemUtils class work in newer Java (also RFB requires modern ASM)
+    // - Pack200
+    // Should be backwards compatible
     // Cannot be shaded as mod classes aren't loaded on launch
     implementation(libs.asm)
     implementation(libs.asmCommons)
     implementation(libs.asmTree)
     implementation(libs.asmAnalysis)
     implementation(libs.asmUtil)
-
-    // Mod dependencies
-    shade(libs.reflect)
-
-    // Updated game dependencies
-    // Required for:
-    // - Making SystemUtils work in newer Java versions
-    // - Pack200
-    // Should be backwards compatible
-    // Cannot shade, the user needs to modify minecraft.json directly
     implementation("org.apache.commons:commons-lang3:3.18.0")
     implementation("org.apache.commons:commons-compress:1.28.0")
+    // Cannot be shaded because Forge will not be able to recognize
+    // the mod jar when RFB is not present otherwise
+    implementation(libs.reflect)
 }
 
 sourceSets.main {

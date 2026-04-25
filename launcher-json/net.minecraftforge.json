@@ -13,6 +13,14 @@
       "url": "https://nexus.gtnewhorizons.com/repository/public/"
     },
     {
+      "name": "net.lenni0451:Reflect:1.6.3",
+      "url": "https://maven.minecraftforge.net/"
+    },
+    {
+      "name": "net.lenni0451.commons:unchecked:1.9.2",
+      "url": "https://maven.minecraftforge.net/"
+    },
+    {
       "name": "org.ow2.asm:asm:9.9.1",
       "url": "https://maven.minecraftforge.net/"
     },

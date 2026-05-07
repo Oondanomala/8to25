@@ -157,8 +157,7 @@ public class ForgePatchTransformer implements RfbClassTransformer {
                     "(Ljava/lang/Object;Ljava/lang/reflect/Field;Ljava/lang/Object;)V", false
                 ));
                 instructions.add(new InsnNode(RETURN));
-            }
-            if (method.name.equals("addEnum") && method.desc.equals("(Ljava/lang/Class;Ljava/lang/String;[Ljava/lang/Class;[Ljava/lang/Object;)Ljava/lang/Enum;")) {
+            } else if (method.name.equals("addEnum") && method.desc.equals("(Ljava/lang/Class;Ljava/lang/String;[Ljava/lang/Class;[Ljava/lang/Object;)Ljava/lang/Enum;")) {
                 method.tryCatchBlocks.clear();
                 InsnList instructions = method.instructions;
                 instructions.clear();

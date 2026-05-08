@@ -51,6 +51,8 @@ If they do not, please make an issue and I'll try to fix it!
 
 ### Known issues
 
+- [MPKMod](https://github.com/kurrycat2004/MpkMod)'s macro GUI will not work,
+  this is a [RetroFuturaBootstrap bug](https://github.com/GTNewHorizons/RetroFuturaBootstrap/pull/17).
 - Optifine's native memory usage tracker shown in the F3 debug menu does not work and will always show `0`.
   This is harmless and can be ignored.
 

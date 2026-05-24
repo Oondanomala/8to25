@@ -1,6 +1,6 @@
-# 8to25 - Running Forge `1.8.9` on Java 25!
+# 8to25 - Running Forge `1.8.9` on Java 25+!
 
-8to25 is a **client side only** Forge mod for `1.8.9` that allows the game to launch on Java 25,
+8to25 is a **client side only** Forge mod for `1.8.9` that allows the game to launch on Java 25+,
 unlocking higher performance and lower memory usage.
 Unlike lwjgl3ify, this mod does not make the game run under LWJGL3, LWJGL2 is still used.
 

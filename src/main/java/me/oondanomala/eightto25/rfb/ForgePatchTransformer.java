@@ -54,8 +54,8 @@ public class ForgePatchTransformer implements RfbClassTransformer {
     }
 
     @Override
-    public void transformClass(ExtensibleClassLoader classLoader, Context context, Manifest manifest, String className, ClassNodeHandle classNode) {
-        if (!classNode.isPresent()) return;
+    public boolean transformClassIfNeeded(ExtensibleClassLoader classLoader, Context context, Manifest manifest, String className, ClassNodeHandle classNode) {
+        if (!classNode.isPresent()) return false;
         switch (className) {
             case CLASS_PATCH_MANAGER:
                 tfClassPatchManager(classNode);
@@ -73,6 +73,7 @@ public class ForgePatchTransformer implements RfbClassTransformer {
                 tfTracingPrintStream(classNode);
                 break;
         }
+        return true;
     }
 
     /**

@@ -23,9 +23,9 @@ public class EarlyForgePatchTransformer implements RfbClassTransformer {
     }
 
     @Override
-    public void transformClass(ExtensibleClassLoader classLoader, Context context, Manifest manifest, String className, ClassNodeHandle classNode) {
+    public boolean transformClassIfNeeded(ExtensibleClassLoader classLoader, Context context, Manifest manifest, String className, ClassNodeHandle classNode) {
         ClassNode node = classNode.getNode();
-        if (node == null) return;
+        if (node == null) return false;
 
         // Do not register TerminalTransformer
         for (MethodNode method : node.methods) {
@@ -34,5 +34,6 @@ public class EarlyForgePatchTransformer implements RfbClassTransformer {
                 method.instructions.add(new InsnNode(RETURN));
             }
         }
+        return true;
     }
 }

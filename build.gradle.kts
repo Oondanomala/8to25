@@ -2,7 +2,6 @@ plugins {
     idea
     java
     id("gg.essential.loom") version "1.15.+"
-    id("com.gradleup.shadow") version "9.4.+"
 }
 
 val modGroup: String by project
@@ -42,20 +41,12 @@ loom {
 
 repositories {
     mavenCentral()
-    maven("https://repo.essential.gg/repository/maven-public")
     maven("https://nexus.gtnewhorizons.com/repository/public/")
 }
 
-val shade: Configuration by configurations.creating {
-    configurations.implementation.get().extendsFrom(this)
-}
-
 configurations.configureEach {
-    resolutionStrategy.dependencySubstitution {
-        substitute(module("net.minecraft:launchwrapper"))
-            .using(module(libs.rfb.get().toString()))
-            .because("LaunchWrapper replacement")
-    }
+    // Replaced by RFB
+    exclude("net.minecraft", "launchwrapper")
     // Exclude ASM 5
     exclude("org.ow2.asm", "asm-debug-all")
 }
@@ -65,19 +56,14 @@ dependencies {
     mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")
     forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
 
-    // Updated game dependencies
-    // Required for:
-    // - Making ASM and the SystemUtils class work in newer Java (also RFB requires modern ASM)
-    // - Pack200
-    // Should be backwards compatible
-    // Cannot be shaded as mod classes aren't loaded on launch
-    implementation(libs.asm)
-    implementation(libs.asmCommons)
-    implementation(libs.asmTree)
-    implementation(libs.asmAnalysis)
-    implementation(libs.asmUtil)
+    // Explicitly depend on RFB so other mods can easily depend on this mod
+    // Transitively depends on modern ASM (required for modern Java compatibility)
+    implementation(libs.rfb)
+    // Updated game dependencies, should be backwards compatible
     implementation("org.apache.commons:commons-lang3:3.18.0")
+        ?.because("Makes the SystemUtil class work in newer Java")
     implementation("org.apache.commons:commons-compress:1.28.0")
+        ?.because("Non JDK Pack200 implementation")
     // Cannot be shaded because Forge will not be able to recognize
     // the mod jar when RFB is not present otherwise
     implementation(libs.reflect)
@@ -104,20 +90,10 @@ tasks {
         }
     }
 
-    shadowJar {
-        archiveClassifier.set("dev")
-        configurations = listOf(shade)
-    }
-
     jar {
         manifest.attributes(mapOf(
             "FMLCorePluginContainsFMLMod" to true,
             "ForceLoadAsMod" to true,
         ))
-    }
-
-    remapJar {
-        inputFile.set(shadowJar.get().archiveFile)
-        archiveClassifier.set("")
     }
 }

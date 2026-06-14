@@ -58,12 +58,18 @@ dependencies {
 
     // Explicitly depend on RFB so other mods can easily depend on this mod
     // Transitively depends on modern ASM (required for modern Java compatibility)
-    implementation(libs.rfb)
+    api(libs.rfb)
     // Updated game dependencies, should be backwards compatible
-    implementation("org.apache.commons:commons-lang3:3.18.0")
+    api("org.apache.commons:commons-lang3:3.18.0")
         ?.because("Makes the SystemUtil class work in newer Java")
-    implementation("org.apache.commons:commons-compress:1.28.0")
+    api("org.apache.commons:commons-compress:1.28.0")
         ?.because("Non JDK Pack200 implementation")
+    // "100% binary compatible, 1 minor source compatibility issue (removed a throws IOException clause)" - lwjgl3ify
+    api("com.google.code.gson:gson:2.13.2") {
+        because("Not necessary, but nice to update")
+        exclude("com.google.errorprone") // Unnecessary annotations
+    }
+
     // Cannot be shaded because Forge will not be able to recognize
     // the mod jar when RFB is not present otherwise
     implementation(libs.reflect)

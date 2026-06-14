@@ -73,3 +73,47 @@ It's actually surprisingly simple!
   and Apache Commons Compress and its dependencies are updated for the following bullet point.
 - Usage of the now removed `Pack200` class is redirected to the Apache Commons Compress implementation
   (with a compatibility shim to work around Forge bugs).
+
+## Using modern Java in your own mod
+
+If you want to use modern Java (or you want the updated dependencies this mod provides)
+in your own mod you can simply depend on this mod like this:
+
+In `build.gradle.kts`:
+```kotlin
+loom {
+    runConfigs {
+        getByName("client") {
+            // To make dev env work with RFB
+            property("file.encoding", "UTF-8")
+            property("java.system.class.loader", "com.gtnewhorizons.retrofuturabootstrap.RfbSystemClassLoader")
+            mainClass.set("com.gtnewhorizons.retrofuturabootstrap.Main")
+        }
+    }
+}
+
+repositories {
+    // Required for RFB
+    maven("https://nexus.gtnewhorizons.com/repository/public/")
+}
+
+configurations.configureEach {
+    // Replaced by 8to25
+    exclude("net.minecraft", "launchwrapper")
+    exclude("org.ow2.asm", "asm-debug-all")
+}
+
+dependencies {
+    // modImplementation is not needed as it does not touch obfuscated code
+    implementation("me.oondanomala.eightto25.8to25:LATEST-TAG")
+}
+```
+
+Then add the 8to25 source in `settings.gradle.kts`:
+```kotlin
+sourceControl {
+    gitRepository(java.net.URI("https://github.com/Oondanomala/8to25.git")) {
+        producesModule("me.oondanomala.eightto25:8to25")
+    }
+}
+```

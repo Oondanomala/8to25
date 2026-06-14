@@ -70,8 +70,8 @@ dependencies {
         exclude("com.google.errorprone") // Unnecessary annotations
     }
 
-    // Cannot be shaded because Forge will not be able to recognize
-    // the mod jar when RFB is not present otherwise
+    // Cannot be shaded because Forge will not be able to
+    // recognize the mod jar when RFB is not present otherwise
     implementation(libs.reflect)
 }
 

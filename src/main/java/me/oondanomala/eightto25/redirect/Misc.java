@@ -55,13 +55,13 @@ public final class Misc {
             if (startEatingInstruction.test(insn)) {
                 eatingInstructions = true;
             }
-            if (stopEatingInstructions.test(insn)) {
-                iterator.remove();
-                instructionAdder.accept(iterator);
-                return;
-            }
             if (eatingInstructions) {
-                iterator.remove();
+                if (stopEatingInstructions.test(insn)) {
+                    iterator.remove();
+                    instructionAdder.accept(iterator);
+                } else {
+                    iterator.remove();
+                }
             }
         }
     }

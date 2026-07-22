@@ -59,9 +59,9 @@ public final class Misc {
                 if (stopEatingInstructions.test(insn)) {
                     iterator.remove();
                     instructionAdder.accept(iterator);
-                } else {
-                    iterator.remove();
+                    return;
                 }
+                iterator.remove();
             }
         }
     }

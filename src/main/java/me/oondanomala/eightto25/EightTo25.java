@@ -3,6 +3,7 @@ package me.oondanomala.eightto25;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.swing.JOptionPane;
@@ -13,6 +14,7 @@ import java.awt.GraphicsEnvironment;
 public class EightTo25 {
     public static final String NAME = "8to25";
     public static final String VERSION = "1.1.2";
+    public static final Logger LOGGER = LogManager.getLogger(NAME);
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -20,12 +22,11 @@ public class EightTo25 {
             try {
                 Class.forName("com.gtnewhorizons.retrofuturabootstrap.Main", false, getClass().getClassLoader());
             } catch (ClassNotFoundException e) {
-                Logger logger = event.getModLog();
                 if (!GraphicsEnvironment.isHeadless()) {
                     try {
                         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                     } catch (Exception ex) {
-                        logger.warn(ex);
+                        LOGGER.warn(ex);
                     }
                     JOptionPane.showMessageDialog(
                         null,
@@ -37,12 +38,12 @@ public class EightTo25 {
                     );
                 }
 
-                logger.fatal("******************************************************************************************");
-                logger.fatal("* RetroFuturaBootstrap not found, 8to25 has probably not been installed correctly!       *");
-                logger.fatal("* Please see the installation guide at https://github.com/Oondanomala/8to25#installation *");
-                logger.fatal("* to learn how to install the mod.                                                       *");
-                logger.fatal("* If you are sure this is a mistake, add -Deightto25.skiprfbcheck to your JVM options.   *");
-                logger.fatal("******************************************************************************************");
+                LOGGER.fatal("******************************************************************************************");
+                LOGGER.fatal("* RetroFuturaBootstrap not found, 8to25 has probably not been installed correctly!       *");
+                LOGGER.fatal("* Please see the installation guide at https://github.com/Oondanomala/8to25#installation *");
+                LOGGER.fatal("* to learn how to install the mod.                                                       *");
+                LOGGER.fatal("* If you are sure this is a mistake, add -Deightto25.skiprfbcheck to your JVM options.   *");
+                LOGGER.fatal("******************************************************************************************");
                 FMLCommonHandler.instance().exitJava(1, false);
             }
         }

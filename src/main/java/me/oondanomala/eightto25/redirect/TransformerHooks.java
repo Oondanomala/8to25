@@ -14,6 +14,8 @@ import java.util.function.Predicate;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
+import static me.oondanomala.eightto25.EightTo25.LOGGER;
+
 /**
  * Various unrelated hooks for transformed code to call,
  * to minimize the amount of manually written bytecode.
@@ -51,8 +53,7 @@ public final class TransformerHooks {
         try {
             return jis.getNextJarEntry();
         } catch (EOFException eof) {
-            System.err.println("EOF caught while searching for forge patches: " + eof);
-            eof.printStackTrace(System.err);
+            LOGGER.warn("EOF caught while searching for forge patches", eof);
             return null;
         }
     }

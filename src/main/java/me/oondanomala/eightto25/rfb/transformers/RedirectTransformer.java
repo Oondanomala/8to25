@@ -1,4 +1,4 @@
-package me.oondanomala.eightto25.rfb;
+package me.oondanomala.eightto25.rfb.transformers;
 
 import com.gtnewhorizons.retrofuturabootstrap.api.BytePatternMatcher;
 import com.gtnewhorizons.retrofuturabootstrap.api.ClassHeaderMetadata;

@@ -6,6 +6,9 @@ import com.gtnewhorizons.retrofuturabootstrap.api.RfbClassTransformer;
 import com.gtnewhorizons.retrofuturabootstrap.api.RfbClassTransformerHandle;
 import com.gtnewhorizons.retrofuturabootstrap.api.RfbPlugin;
 import com.gtnewhorizons.retrofuturabootstrap.api.RfbPluginHandle;
+import me.oondanomala.eightto25.rfb.transformers.EarlyForgePatchTransformer;
+import me.oondanomala.eightto25.rfb.transformers.ForgePatchTransformer;
+import me.oondanomala.eightto25.rfb.transformers.RedirectTransformer;
 import net.lenni0451.reflect.Modules;
 
 public class EightTo25RfbPlugin implements RfbPlugin {

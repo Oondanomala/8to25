@@ -14,10 +14,13 @@ import java.util.function.Predicate;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
+/**
+ * Various unrelated hooks for transformed code to call,
+ * to minimize the amount of manually written bytecode.
+ */
 @SuppressWarnings("unused") // Used from ASM
-public final class Misc {
+public final class TransformerHooks {
     private static final Field modifiersField;
-
     static {
         try {
             modifiersField = Field.class.getDeclaredField("modifiers");
@@ -30,6 +33,9 @@ public final class Misc {
         Fields.setInt(field, modifiersField, field.getModifiers() & ~Modifier.FINAL);
     }
 
+    /**
+     * @see me.oondanomala.eightto25.rfb.transformers.ForgePatchTransformer#tfEnumHelper(com.gtnewhorizons.retrofuturabootstrap.api.ClassNodeHandle)
+     */
     @SuppressWarnings({"unchecked", "rawtypes"}) // This is fine :)
     public static <T extends Enum<?>> T addEnum(Class<T> enumType, String enumName, Class<?>[] paramTypes, Object[] paramValues) {
         T newValue = (T) Enums.newInstance((Class) enumType, enumName, enumType.getEnumConstants().length, paramTypes, paramValues);
@@ -37,6 +43,9 @@ public final class Misc {
         return newValue;
     }
 
+    /**
+     * @see me.oondanomala.eightto25.rfb.transformers.ForgePatchTransformer#tfClassPatchManager(com.gtnewhorizons.retrofuturabootstrap.api.ClassNodeHandle)
+     */
     // Taken from lwjgl3ify https://github.com/GTNewHorizons/lwjgl3ify/blob/a80bceaf24feb157eefbeb74ddf5f88e5061ade9/src/main/java/me/eigenraven/lwjgl3ify/redirects/JarInputStream.java
     public static JarEntry getNextJarEntrySafe(JarInputStream jis) throws IOException {
         try {

@@ -3,7 +3,7 @@ package me.oondanomala.eightto25.rfb.transformers;
 import com.gtnewhorizons.retrofuturabootstrap.api.ClassNodeHandle;
 import com.gtnewhorizons.retrofuturabootstrap.api.ExtensibleClassLoader;
 import com.gtnewhorizons.retrofuturabootstrap.api.RfbClassTransformer;
-import me.oondanomala.eightto25.redirect.Misc;
+import me.oondanomala.eightto25.redirect.TransformerHooks;
 import net.lenni0451.reflect.Fields;
 import net.minecraftforge.common.util.EnumHelper;
 import org.jetbrains.annotations.NotNull;
@@ -28,13 +28,13 @@ import static org.objectweb.asm.Opcodes.*;
 // Based off of lwjgl3ify's ForgePatchTransformer
 // https://github.com/GTNewHorizons/lwjgl3ify/blob/a80bceaf24feb157eefbeb74ddf5f88e5061ade9/src/main/java/me/eigenraven/lwjgl3ify/rfb/transformers/ForgePatchTransformer.java
 public class ForgePatchTransformer implements RfbClassTransformer {
-    public static final String CLASS_PATCH_MANAGER = "net.minecraftforge.fml.common.patcher.ClassPatchManager";
-    public static final String ENUM_HELPER = "net.minecraftforge.common.util.EnumHelper";
-    public static final String OBJECT_HOLDER_REF = "net.minecraftforge.fml.common.registry.ObjectHolderRef";
-    public static final String ASM_MOD_PARSER = "net.minecraftforge.fml.common.discovery.asm.ASMModParser";
-    public static final String TRACING_PRINT_STREAM = "net.minecraftforge.fml.common.TracingPrintStream";
+    private static final String CLASS_PATCH_MANAGER = "net.minecraftforge.fml.common.patcher.ClassPatchManager";
+    private static final String ENUM_HELPER = "net.minecraftforge.common.util.EnumHelper";
+    private static final String OBJECT_HOLDER_REF = "net.minecraftforge.fml.common.registry.ObjectHolderRef";
+    private static final String ASM_MOD_PARSER = "net.minecraftforge.fml.common.discovery.asm.ASMModParser";
+    private static final String TRACING_PRINT_STREAM = "net.minecraftforge.fml.common.TracingPrintStream";
 
-    public static final String[] PATCHED_CLASSES = new String[]{
+    private static final String[] PATCHED_CLASSES = new String[]{
         CLASS_PATCH_MANAGER, ENUM_HELPER, OBJECT_HOLDER_REF, ASM_MOD_PARSER, TRACING_PRINT_STREAM
     };
 
@@ -90,7 +90,7 @@ public class ForgePatchTransformer implements RfbClassTransformer {
                         MethodInsnNode methodInsn = (MethodInsnNode) insn;
                         if (methodInsn.owner.equals("java/util/jar/JarInputStream") && methodInsn.name.equals("getNextJarEntry")) {
                             methodInsn.setOpcode(INVOKESTATIC);
-                            methodInsn.owner = Type.getInternalName(Misc.class);
+                            methodInsn.owner = Type.getInternalName(TransformerHooks.class);
                             methodInsn.name = "getNextJarEntrySafe";
                             methodInsn.desc = "(Ljava/util/jar/JarInputStream;)Ljava/util/jar/JarEntry;";
                         }
@@ -144,7 +144,7 @@ public class ForgePatchTransformer implements RfbClassTransformer {
                 instructions.add(new VarInsnNode(ALOAD, 0));
                 instructions.add(new MethodInsnNode(
                     INVOKESTATIC,
-                    Type.getInternalName(Misc.class),
+                    Type.getInternalName(TransformerHooks.class),
                     "unfinalizeField",
                     "(Ljava/lang/reflect/Field;)V", false
                 ));
@@ -168,7 +168,7 @@ public class ForgePatchTransformer implements RfbClassTransformer {
                 instructions.add(new VarInsnNode(ALOAD, 3));
                 instructions.add(new MethodInsnNode(
                     INVOKESTATIC,
-                    Type.getInternalName(Misc.class),
+                    Type.getInternalName(TransformerHooks.class),
                     "addEnum",
                     "(Ljava/lang/Class;Ljava/lang/String;[Ljava/lang/Class;[Ljava/lang/Object;)Ljava/lang/Enum;", false
                 ));
@@ -192,14 +192,14 @@ public class ForgePatchTransformer implements RfbClassTransformer {
                 if (insn.getOpcode() == INVOKESTATIC) {
                     MethodInsnNode methodInsn = ((MethodInsnNode) insn);
                     if (methodInsn.name.equals("makeWritable")) {
-                        methodInsn.owner = Type.getInternalName(Misc.class);
+                        methodInsn.owner = Type.getInternalName(TransformerHooks.class);
                         methodInsn.name = "unfinalizeField";
                     }
                 }
             }
             // Brittle, but works :)
             if (method.name.equals("apply")) {
-                Misc.patchInstructions(
+                TransformerHooks.patchInstructions(
                     method.instructions.iterator(),
                     insn -> insn.getOpcode() == GETSTATIC && ((FieldInsnNode) insn).name.equals("newFieldAccessor"),
                     insn -> insn.getOpcode() == POP,

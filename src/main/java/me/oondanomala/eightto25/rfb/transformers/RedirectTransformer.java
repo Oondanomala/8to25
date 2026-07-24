@@ -17,8 +17,12 @@ import java.util.stream.Stream;
 // Based off of lwjgl3ify's LwjglRedirectTransformer
 // https://github.com/GTNewHorizons/lwjgl3ify/blob/084284f0941a3ea41a7c06160f6d344e873f9f4b/src/main/java/me/eigenraven/lwjgl3ify/rfb/transformers/LwjglRedirectTransformer.java
 public class RedirectTransformer extends Remapper implements RfbClassTransformer {
-    private static final String[] FROM_PREFIXES = new String[]{"java/util/jar/Pack200"};
-    private static final String[] TO_PREFIXES = new String[]{"me/oondanomala/eightto25/redirect/Pack200"};
+    private static final String[] FROM_PREFIXES = new String[]{
+        "java/util/jar/Pack200"
+    };
+    private static final String[] TO_PREFIXES = new String[]{
+        "me/oondanomala/eightto25/redirect/Pack200"
+    };
     private static final BytePatternMatcher PREFIX_MATCHER = new BytePatternMatcher(FROM_PREFIXES, BytePatternMatcher.Mode.Contains);
 
     public RedirectTransformer() {

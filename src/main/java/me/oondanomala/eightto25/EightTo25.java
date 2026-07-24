@@ -9,9 +9,8 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import java.awt.GraphicsEnvironment;
 
-@Mod(modid = EightTo25.MODID, name = EightTo25.NAME, version = EightTo25.VERSION, clientSideOnly = true)
+@Mod(modid = EightTo25.NAME, name = EightTo25.NAME, version = EightTo25.VERSION, clientSideOnly = true)
 public class EightTo25 {
-    public static final String MODID = "8to25";
     public static final String NAME = "8to25";
     public static final String VERSION = "1.1.2";
 

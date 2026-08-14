@@ -2,6 +2,7 @@ plugins {
     idea
     java
     id("gg.essential.loom") version "1.15.+"
+    id("com.gradleup.shadow") version "9.6.+"
 }
 
 val modGroup: String by project
@@ -19,9 +20,11 @@ java {
 loom {
     runConfigs {
         getByName("client") {
+            property("mixin.debug.verbose", "true")
             property("file.encoding", "UTF-8")
             property("java.system.class.loader", "com.gtnewhorizons.retrofuturabootstrap.RfbSystemClassLoader")
             vmArgs("--enable-native-access", "ALL-UNNAMED")
+            programArgs("--tweakClass", "org.spongepowered.asm.launch.MixinTweaker")
             mainClass.set("com.gtnewhorizons.retrofuturabootstrap.Main")
         }
         remove(getByName("server"))
@@ -40,8 +43,15 @@ loom {
 }
 
 repositories {
+    maven("https://jitpack.io") {
+        content { includeGroup("com.github.Oondanomala") }
+    }
     mavenCentral()
     maven("https://nexus.gtnewhorizons.com/repository/public/")
+}
+
+val shade: Configuration by configurations.creating {
+    configurations.api.get().extendsFrom(this)
 }
 
 configurations.configureEach {
@@ -76,6 +86,12 @@ dependencies {
         exclude("com.google.errorprone") // Unnecessary annotations
     }
 
+    // Modern Mixin with backward compatibility patches
+    shade("com.github.Oondanomala:Mixin8:1.0-0.17.1-0.8.7") {
+        isTransitive = false
+    }
+    shade("io.github.llamalad7:mixinextras-common:0.5.4")
+
     // Cannot be shaded because Forge will not be able to
     // recognize the mod jar when RFB is not present otherwise
     implementation("net.lenni0451:Reflect:1.6.4")
@@ -102,10 +118,30 @@ tasks {
         }
     }
 
+    shadowJar {
+        archiveClassifier.set("dev")
+        configurations = listOf(shade)
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+        mergeServiceFiles()
+        rename("LICENSE.txt", "LICENSE_Mixin")
+    }
+
     jar {
         manifest.attributes(mapOf(
             "FMLCorePluginContainsFMLMod" to true,
             "ForceLoadAsMod" to true,
+            "TweakClass" to "org.spongepowered.asm.launch.MixinTweaker",
+            "MixinConfigs" to "8to25.mixins.json",
+            // Enable using Mixin as a Java Agent for mixin hotswap
+            "Premain-Class" to "org.spongepowered.tools.agent.MixinAgent",
+            "Agent-Class" to "org.spongepowered.tools.agent.MixinAgent",
+            "Can-Redefine-Classes" to true,
+            "Can-Retransform-Classes" to true,
         ))
+    }
+
+    remapJar {
+        inputFile.set(shadowJar.get().archiveFile)
+        archiveClassifier.set("")
     }
 }

@@ -1,0 +1,5 @@
+{
+  "minVersion": "0.8",
+  "package": "me.oondanomala.eightto25.mixin.mixins",
+  "plugin": "me.oondanomala.eightto25.mixin.MixinPlugin"
+}

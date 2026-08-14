@@ -1,3 +1,0 @@
-[libraries]
-rfb = { module = "com.gtnewhorizons.retrofuturabootstrap:RetroFuturaBootstrap", version = "1.1.1" }
-reflect = { module = "net.lenni0451:Reflect", version = "1.6.4" }

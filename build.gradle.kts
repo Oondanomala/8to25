@@ -57,8 +57,14 @@ dependencies {
     forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
 
     // Explicitly depend on RFB so other mods can easily depend on this mod
-    // Transitively depends on modern ASM (required for modern Java compatibility)
-    api(libs.rfb)
+    api("com.gtnewhorizons.retrofuturabootstrap:RetroFuturaBootstrap:1.1.1")
+    // Update ASM (required for modern Java compatibility)
+    val asmVersion = "9.10.1"
+    api("org.ow2.asm:asm:$asmVersion")
+    api("org.ow2.asm:asm-commons:$asmVersion")
+    api("org.ow2.asm:asm-tree:$asmVersion")
+    api("org.ow2.asm:asm-analysis:$asmVersion")
+    api("org.ow2.asm:asm-util:$asmVersion")
     // Updated game dependencies, should be backwards compatible
     api("org.apache.commons:commons-lang3:3.18.0")
         ?.because("Makes the SystemUtil class work in newer Java")
@@ -72,7 +78,7 @@ dependencies {
 
     // Cannot be shaded because Forge will not be able to
     // recognize the mod jar when RFB is not present otherwise
-    implementation(libs.reflect)
+    implementation("net.lenni0451:Reflect:1.6.4")
 }
 
 sourceSets.main {

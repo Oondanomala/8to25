@@ -15,11 +15,11 @@ import java.awt.GraphicsEnvironment;
     name = EightTo25.NAME,
     version = EightTo25.VERSION,
     clientSideOnly = true,
-    updateJSON = "https://github.com/Oondanomala/8to25/blob/master/versions.json"
+    updateJSON = "https://raw.githubusercontent.com/Oondanomala/8to25/master/versions.json"
 )
 public class EightTo25 {
     public static final String NAME = "8to25";
-    public static final String VERSION = "1.2.0";
+    public static final String VERSION = "1.2.1";
     public static final Logger LOGGER = LogManager.getLogger(NAME);
 
     @Mod.EventHandler

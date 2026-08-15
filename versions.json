@@ -1,10 +1,11 @@
 {
   "homepage": "https://github.com/Oondanomala/8to25/releases/latest",
   "promos": {
-    "1.8.9-recommended": "1.2.0"
+    "1.8.9-recommended": "1.2.1"
   },
   "1.8.9": {
-    "1.2.0": "Modern Mixin & MixinExtras are now bundled and loaded, removing the need for MixinBooter. Added update checker.",
+    "1.2.1": "Fixed the update checker",
+    "1.2.0": "An updated and backwards compatible version of Mixin & MixinExtras is now bundled and loaded, removing the need for MixinBooter. Added update checker.",
     "1.1.2": "Updated Gson to 2.13.2, improved the developer experience when depending on this mod.",
     "1.1.1": "Worked around a RetroFuturaBootstrap bug that broke MPK.",
     "1.1.0": "Updated RetroFuturaBootstrap to 1.1.0, which slightly improves launch times.",

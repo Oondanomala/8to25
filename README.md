@@ -1,7 +1,10 @@
 # 8to25 - Running Forge `1.8.9` on Java 25+!
 
 8to25 is a **client side only** Forge mod for `1.8.9` that allows the game to launch on Java 25+,
-unlocking higher performance and lower memory usage.
+unlocking higher performance and lower memory usage. As of `1.2.0`, it also bundles an
+updated and backwards-compatible version of [Mixin](https://github.com/Oondanomala/Mixin8)
+and [MixinExtras](https://github.com/LlamaLad7/MixinExtras), which brings modern Mixin features,
+better performance, and a much improved developer experience.
 Unlike lwjgl3ify, this mod does not make the game run under LWJGL3, LWJGL2 is still used.
 
 > [!NOTE]
@@ -45,12 +48,11 @@ but you will have to figure out how to install it yourself :)
 Most mods should work just fine.
 If they do not, please make an issue and I'll try to fix it!
 
-> [!WARNING]
-> If any of the mods require Mixin then [MixinBooter](https://github.com/CleanroomMC/MixinBooter)
-> must be installed for things to work!
-
 ### Known issues
 
+- As of `1.2.0` Mixin is bundled with the mod, so MixinBooter
+  is no longer necessary and is fully incompatible.
+  If a mod explicitly depends on MixinBooter, please report it as a bug.
 - Some mods may not work because of this [RetroFuturaBootstrap bug](https://github.com/GTNewHorizons/RetroFuturaBootstrap/pull/17),
   please report broken mods as it can usually be worked around.
 - Optifine's native memory usage tracker shown in the F3 debug menu does not work and will always show `0`.
@@ -73,10 +75,13 @@ It's actually surprisingly simple!
   and Apache Commons Compress and its dependencies are updated for the following bullet point.
 - Usage of the now removed `Pack200` class is redirected to the Apache Commons Compress implementation
   (with a compatibility shim to work around Forge bugs).
+- The modern Mixin loader is based off of the [Fabric fork](https://github.com/FabricMC/Mixin),
+  which already has almost complete backwards compatibility with Mixin `0.7.11`. With a
+  [few simple tweaks](https://github.com/FabricMC/Mixin/compare/main...Oondanomala:Mixin8:main), it's ready to go!
 
 ## Using modern Java in your own mod
 
-If you want to use modern Java (or you want the updated dependencies this mod provides)
+If you want to use modern Java, modern Mixin/MixinExtras, or any of the other updated dependencies this mod provides
 in your own mod you can simply depend on this mod like this:
 
 In `build.gradle.kts`:
@@ -88,11 +93,17 @@ loom {
             property("file.encoding", "UTF-8")
             property("java.system.class.loader", "com.gtnewhorizons.retrofuturabootstrap.RfbSystemClassLoader")
             mainClass.set("com.gtnewhorizons.retrofuturabootstrap.Main")
+            // To initialize Mixin in your dev env, remove if you don't use it
+            programArgs("--tweakClass", "org.spongepowered.asm.launch.MixinTweaker")
         }
     }
 }
 
 repositories {
+    // Required for Mixin
+    maven("https://jitpack.io") {
+        content { includeGroup("com.github.Oondanomala") }
+    }
     // Required for RFB
     maven("https://nexus.gtnewhorizons.com/repository/public/")
 }
@@ -105,7 +116,11 @@ configurations.configureEach {
 
 dependencies {
     // modImplementation is not needed as it does not touch obfuscated code
-    implementation("me.oondanomala.eightto25.8to25:LATEST-TAG")
+    implementation("me.oondanomala.eightto25.8to25:LATEST-TAG") {
+        // If your mod does not use Mixin, you can exclude it from the dependency
+        //exclude(module = "Mixin8")
+        //exclude(module = "mixinextras-common")
+    }
 }
 ```
 
@@ -117,3 +132,6 @@ sourceControl {
     }
 }
 ```
+
+It's recommended you follow this [Fabric wiki page](https://docs.fabricmc.net/develop/getting-started/intellij-idea/launching-the-game#hotswapping-classes)
+to get improved hotswap.

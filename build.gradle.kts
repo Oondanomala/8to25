@@ -87,7 +87,7 @@ dependencies {
     }
 
     // Modern Mixin with backward compatibility patches
-    shade("com.github.Oondanomala:Mixin8:1.0-0.17.1-0.8.7") {
+    shade("com.github.Oondanomala:Mixin8:1.1-0.17.1-0.8.7") {
         isTransitive = false
     }
     shade("io.github.llamalad7:mixinextras-common:0.5.4")

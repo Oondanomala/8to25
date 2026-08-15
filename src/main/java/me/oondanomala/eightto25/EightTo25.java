@@ -10,7 +10,13 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import java.awt.GraphicsEnvironment;
 
-@Mod(modid = EightTo25.NAME, name = EightTo25.NAME, version = EightTo25.VERSION, clientSideOnly = true)
+@Mod(
+    modid = EightTo25.NAME,
+    name = EightTo25.NAME,
+    version = EightTo25.VERSION,
+    clientSideOnly = true,
+    updateJSON = "https://github.com/Oondanomala/8to25/blob/master/versions.json"
+)
 public class EightTo25 {
     public static final String NAME = "8to25";
     public static final String VERSION = "1.1.2";

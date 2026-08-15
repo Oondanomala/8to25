@@ -50,7 +50,7 @@ If they do not, please make an issue and I'll try to fix it!
 
 ### Known issues
 
-- As of `1.2.0` Mixin is bundled with the mod, so MixinBooter
+- As of `1.2.0` Mixin is bundled with the mod, so [MixinBooter](https://github.com/CleanroomMC/MixinBooter)
   is no longer necessary and is fully incompatible.
   If a mod explicitly depends on MixinBooter, please report it as a bug.
 - Some mods may not work because of this [RetroFuturaBootstrap bug](https://github.com/GTNewHorizons/RetroFuturaBootstrap/pull/17),

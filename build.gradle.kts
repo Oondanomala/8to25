@@ -119,7 +119,7 @@ tasks {
     }
 
     shadowJar {
-        archiveClassifier.set("dev")
+        archiveClassifier.set("")
         configurations = listOf(shade)
         duplicatesStrategy = DuplicatesStrategy.INCLUDE
         mergeServiceFiles()
@@ -141,7 +141,6 @@ tasks {
     }
 
     remapJar {
-        inputFile.set(shadowJar.get().archiveFile)
-        archiveClassifier.set("")
+        archiveClassifier.set("dev")
     }
 }

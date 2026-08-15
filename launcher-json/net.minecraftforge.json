@@ -21,23 +21,23 @@
       "url": "https://maven.minecraftforge.net/"
     },
     {
-      "name": "org.ow2.asm:asm:9.9.1",
+      "name": "org.ow2.asm:asm:9.10.1",
       "url": "https://maven.minecraftforge.net/"
     },
     {
-      "name": "org.ow2.asm:asm-commons:9.9.1",
+      "name": "org.ow2.asm:asm-commons:9.10.1",
       "url": "https://maven.minecraftforge.net/"
     },
     {
-      "name": "org.ow2.asm:asm-tree:9.9.1",
+      "name": "org.ow2.asm:asm-tree:9.10.1",
       "url": "https://maven.minecraftforge.net/"
     },
     {
-      "name": "org.ow2.asm:asm-analysis:9.9.1",
+      "name": "org.ow2.asm:asm-analysis:9.10.1",
       "url": "https://maven.minecraftforge.net/"
     },
     {
-      "name": "org.ow2.asm:asm-util:9.9.1",
+      "name": "org.ow2.asm:asm-util:9.10.1",
       "url": "https://maven.minecraftforge.net/"
     },
     {

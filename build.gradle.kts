@@ -32,6 +32,7 @@ loom {
 
     forge {
         pack200Provider.set(dev.architectury.pack200.java.Pack200Adapter())
+        mixinConfig("8to25.mixins.json")
     }
 
     // For some reason loom defaults to tab indentation
@@ -131,7 +132,6 @@ tasks {
             "FMLCorePluginContainsFMLMod" to true,
             "ForceLoadAsMod" to true,
             "TweakClass" to "org.spongepowered.asm.launch.MixinTweaker",
-            "MixinConfigs" to "8to25.mixins.json",
             // Enable using Mixin as a Java Agent for mixin hotswap
             "Premain-Class" to "org.spongepowered.tools.agent.MixinAgent",
             "Agent-Class" to "org.spongepowered.tools.agent.MixinAgent",

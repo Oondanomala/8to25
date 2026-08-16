@@ -20,6 +20,7 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
+import java.lang.reflect.Field;
 import java.util.ListIterator;
 import java.util.jar.Manifest;
 
@@ -142,11 +143,12 @@ public class ForgePatchTransformer implements RfbClassTransformer {
                 InsnList instructions = method.instructions;
                 instructions.clear();
                 instructions.add(new VarInsnNode(ALOAD, 0));
+                instructions.add(new InsnNode(ICONST_1));
                 instructions.add(new MethodInsnNode(
-                    INVOKESTATIC,
-                    Type.getInternalName(TransformerHooks.class),
-                    "unfinalizeField",
-                    "(Ljava/lang/reflect/Field;)V", false
+                    INVOKEVIRTUAL,
+                    Type.getInternalName(Field.class),
+                    "setAccessible",
+                    "(Z)V", false
                 ));
                 instructions.add(new VarInsnNode(ALOAD, 1));
                 instructions.add(new VarInsnNode(ALOAD, 0));
@@ -188,12 +190,14 @@ public class ForgePatchTransformer implements RfbClassTransformer {
         for (MethodNode method : node.methods) {
             if (method.instructions == null) continue;
 
-            for (AbstractInsnNode insn : method.instructions) {
+            for (ListIterator<AbstractInsnNode> it = method.instructions.iterator(); it.hasNext(); ) {
+                AbstractInsnNode insn = it.next();
                 if (insn.getOpcode() == INVOKESTATIC) {
                     MethodInsnNode methodInsn = ((MethodInsnNode) insn);
-                    if (methodInsn.name.equals("makeWritable")) {
-                        methodInsn.owner = Type.getInternalName(TransformerHooks.class);
-                        methodInsn.name = "unfinalizeField";
+                    if (methodInsn.owner.equals(node.name) && methodInsn.name.equals("makeWritable")) {
+                        it.remove();
+                        it.previous();
+                        it.remove();
                     }
                 }
             }

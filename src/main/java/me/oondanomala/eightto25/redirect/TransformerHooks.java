@@ -1,13 +1,10 @@
 package me.oondanomala.eightto25.redirect;
 
 import net.lenni0451.reflect.Enums;
-import net.lenni0451.reflect.Fields;
 import org.objectweb.asm.tree.AbstractInsnNode;
 
 import java.io.EOFException;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.ListIterator;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -22,19 +19,6 @@ import static me.oondanomala.eightto25.EightTo25.LOGGER;
  */
 @SuppressWarnings("unused") // Used from ASM
 public final class TransformerHooks {
-    private static final Field modifiersField;
-    static {
-        try {
-            modifiersField = Field.class.getDeclaredField("modifiers");
-        } catch (NoSuchFieldException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static void unfinalizeField(Field field) {
-        Fields.setInt(field, modifiersField, field.getModifiers() & ~Modifier.FINAL);
-    }
-
     /**
      * @see me.oondanomala.eightto25.rfb.transformers.ForgePatchTransformer#tfEnumHelper(com.gtnewhorizons.retrofuturabootstrap.api.ClassNodeHandle)
      */

@@ -15,6 +15,7 @@ import java.awt.GraphicsEnvironment;
     name = EightTo25.NAME,
     version = EightTo25.VERSION,
     clientSideOnly = true,
+    acceptableRemoteVersions = "*",
     updateJSON = "https://raw.githubusercontent.com/Oondanomala/8to25/master/versions.json"
 )
 public class EightTo25 {

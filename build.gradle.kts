@@ -32,7 +32,7 @@ loom {
 
     forge {
         pack200Provider.set(dev.architectury.pack200.java.Pack200Adapter())
-        mixinConfig("8to25.mixins.json")
+        mixinConfig("$modID.mixins.json")
     }
 
     // For some reason loom defaults to tab indentation

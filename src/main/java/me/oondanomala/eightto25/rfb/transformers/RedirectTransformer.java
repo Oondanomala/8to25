@@ -6,6 +6,7 @@ import com.gtnewhorizons.retrofuturabootstrap.api.ClassNodeHandle;
 import com.gtnewhorizons.retrofuturabootstrap.api.ExtensibleClassLoader;
 import com.gtnewhorizons.retrofuturabootstrap.api.RetroFuturaBootstrap;
 import com.gtnewhorizons.retrofuturabootstrap.api.RfbClassTransformer;
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.commons.ClassRemapper;
 import org.objectweb.asm.commons.Remapper;
 import org.objectweb.asm.tree.ClassNode;
@@ -44,7 +45,9 @@ public class RedirectTransformer extends Remapper implements RfbClassTransformer
     public boolean shouldTransformClass(ExtensibleClassLoader classLoader, Context context, Manifest manifest, String className, ClassNodeHandle classNode) {
         if (!classNode.isPresent()) return false;
         ClassHeaderMetadata metadata = classNode.getOriginalMetadata();
-        return metadata != null && metadata.matchesBytes(classNode.getOriginalBytes(), PREFIX_MATCHER);
+        return metadata != null &&
+               metadata.majorVersion < Opcodes.V14 &&
+               metadata.matchesBytes(classNode.getOriginalBytes(), PREFIX_MATCHER);
     }
 
     @Override

@@ -68,7 +68,7 @@ dependencies {
     forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
 
     // Explicitly depend on RFB so other mods can easily depend on this mod
-    api("com.gtnewhorizons.retrofuturabootstrap:RetroFuturaBootstrap:1.1.1")
+    api("com.gtnewhorizons.retrofuturabootstrap:RetroFuturaBootstrap:1.1.2")
     // Update ASM (required for modern Java compatibility)
     val asmVersion = "9.10.1"
     api("org.ow2.asm:asm:$asmVersion")

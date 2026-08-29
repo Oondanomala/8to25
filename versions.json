@@ -1,9 +1,10 @@
 {
   "homepage": "https://github.com/Oondanomala/8to25/releases/latest",
   "promos": {
-    "1.8.9-recommended": "1.2.1"
+    "1.8.9-recommended": "1.2.2"
   },
   "1.8.9": {
+    "1.2.2": "Cleaned up code, resulting in micro optimizations and slightly better compatibility.\nMod is no longer required on other clients when hosting a world.\nUpdated RFB, Mixin, and MixinExtras, resulting in improved compatibility.",
     "1.2.1": "Fixed the update checker",
     "1.2.0": "An updated and backwards compatible version of Mixin & MixinExtras is now bundled and loaded, removing the need for MixinBooter. Added update checker.",
     "1.1.2": "Updated Gson to 2.13.2, improved the developer experience when depending on this mod.",

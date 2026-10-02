@@ -62,7 +62,7 @@ If they do not, please make an issue and I'll try to fix it!
 
 It's actually surprisingly simple!
 
-- LaunchWrapper is replaced with RetroFuturaBootstrap, an open source replacement that supports modern Java,
+- LaunchWrapper is replaced with [RetroFuturaBootstrap](https://github.com/GTNewHorizons/RetroFuturaBootstrap), an open source replacement that supports modern Java,
   makes existing code compatible with newer ASM, and includes an improved class transformer API.
 - The [Reflect](https://github.com/Lenni0451/Reflect) library is used to open all modules and enable unnamed native access.
 - Forge's `EnumHelper` and `ObjectHolderRef` classes are transformed to replace usage of internal reflection API
